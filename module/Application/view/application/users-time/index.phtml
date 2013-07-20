@@ -1,0 +1,36 @@
+<table border=1 cellpadding="10" width="100%">
+    <tr>
+        <th>Пользователь</th>
+        <th>Время за день</th>
+        <th>Время за неделю</th>
+        <th>Время за выходные дни</th>
+    </tr>
+<?php
+foreach ($this->times as $key => $time) {
+    $color = '#C0C0C0';
+    if ($time['userId'] == $this->currentUser->getId()) {
+        $color = '#66CCFF';
+    } elseif ($key%2 == 0) {
+        $color = '#E8E8E8';
+    }
+?>
+    <tr style="background-color: <?php echo $color; ?>">
+        <td align="right" style="font-weight: bold;"><?php echo $time['name'] ?></td>
+        <td>
+            <div style="float: left; text-align: left; width: 50%;">
+                <?php echo $time['startStopTime'];
+                      if ($this->currentUser->getAdmin()) { ?>
+                          <button class="stop" userId="<?php echo $time['userId'] ?>"><?php echo $time['stop'] ?></button>
+                <?php } ?>
+            </div>
+            <div style="float: left; text-align: left; width: 50%;">
+                <?php $time['restTime'] ?>
+            </div>
+        </td>
+        <td><?php echo $time['workedTimeWeekly'] ?></td>
+        <td><?php echo $time['workedTimeHolidays'] ?></td>
+    </tr>
+<?php
+}
+?>
+</table>
